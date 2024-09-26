@@ -1,5 +1,6 @@
+import { FaEnvelope, FaFacebook, FaInstagram, FaLinkedin, FaPaperPlane, FaPhone } from 'react-icons/fa'
 import './Footer.css'
-import { FaArrowRight} from 'react-icons/fa6'
+import { FaArrowRight, FaLocationDot, FaXTwitter} from 'react-icons/fa6'
 
 
 function Footer() {
@@ -36,26 +37,90 @@ function Footer() {
                 </div>
                 <div className='line'></div>
                 <div className='footer-bottom-sec'>
-                    <div className='footer-bottom-about'>
+                    <div className='footer-bottom-about footer-bottom-inner'>
                         <h1>Məkan</h1>
                         <p>To take trivial example which us
                         ever undertakes laborious physica exercise except obsome.</p>
                         <div className='bottom-socials'>
-                            
+                            <button className='social-btn'>
+                                <a href="">
+                                    <FaXTwitter className='social-btn-icon'/>
+                                </a>
+                            </button>
+                            <button className='social-btn'>
+                                <a href="">
+                                    <FaFacebook className='social-btn-icon'/>
+                                </a>
+                            </button>
+                            <button className='social-btn'>
+                                <a href="">
+                                    <FaInstagram className='social-btn-icon'/>
+                                </a>
+                            </button>
+                            <button className='social-btn'>
+                                <a href="">
+                                    <FaLinkedin className='social-btn-icon'/>
+                                </a>
+                            </button>
                         </div>
                     </div>
-                    <div className='footer-bottom-pages'>
-
+                    <div className='footer-bottom-pages footer-bottom-inner'>
+                        <h1>Pages</h1>
+                        <a href="">About us</a>
+                        <a href="">Community blog</a>
+                        <a href="">Work with us</a>
+                        <a href="">Privacy policy</a>
+                        <a href="">Contact us</a>
                     </div>
-                    <div className='footer-bottom-newsletters'>
-
+                    <div className='footer-bottom-newsletters footer-bottom-inner'>
+                        <h1>Newsletter</h1>
+                        <div>
+                            <p>Subscribe our newsletter to get our latest update & news.</p>
+                        </div>
+                        <div>
+                            <form action="">
+                                <input type="mail" placeholder='Email Address'/>
+                                <button className='send-btn' type="submit">
+                                    <FaPaperPlane/>
+                                </button>
+                            </form>
+                        </div>
                     </div>
-                    <div className='footer-bottom-contact'>
-
+                    <div className='footer-bottom-contact footer-bottom-inner'>
+                        <h1>Contact</h1>
+                        <div>
+                            <div className='footer-contact-sec'>
+                                <div className='contact-icon'>
+                                    <FaPhone/>
+                                </div>
+                                <div className='contact-infos'>
+                                    <p>Drop a line</p>
+                                    <p>+00 (123) 456 889</p>
+                                </div>
+                            </div>
+                            <div className='footer-contact-sec'>
+                                <div className='contact-icon'>
+                                        <FaEnvelope/>
+                                    </div>
+                                    <div className='contact-infos'>
+                                        <p> Email Address</p>
+                                        <p>contact@example.com</p>
+                                    </div>
+                                </div>
+                            <div className='footer-contact-sec'>
+                                <div className='contact-icon'>
+                                        <FaLocationDot/>
+                                    </div>
+                                    <div className='contact-infos'>
+                                        <p>Visit office</p>
+                                        <p>583 Main Street, NY, USA</p>
+                                    </div>
+                                </div>
+                        </div>
                     </div>
                 </div>
                 <div className='copyright-sec'>
-
+                    <p>© 2024 Copyrights by Məkan. All Rights Reserved</p>
                 </div>
             </footer>
         </>

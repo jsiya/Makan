@@ -26,6 +26,14 @@ body {
 a{
   text-decoration: none;
 }
+
+.popular-activities-sec{
+  height: 600px;
+  background-image: url(https://gaviaspreview.com/wp/gowilds/wp-content/uploads/2022/12/bg-shape-01.png);
+  background-position: top center;
+  background-repeat: no-repeat;
+}
+
 /* 
 @media (prefers-color-scheme: light) {
   :root {
