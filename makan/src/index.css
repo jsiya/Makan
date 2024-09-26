@@ -33,6 +33,30 @@ a{
   background-position: top center;
   background-repeat: no-repeat;
 }
+.popular-activites-top-inner{
+  font-weight: 700;
+  font-size: 16px;
+  color: #63AB45;
+  background-color: #64ab4530;
+  border-radius: 6px;
+  padding: 10px 20px;
+  margin: 150px 0px 0px 0px;
+}
+.popular-activites-top-sec{
+  display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.popular-activites-desc-sec{
+  font-size: 48px;
+  font-weight: 700;
+  line-height: 1.22;
+  letter-spacing: -0.6px;
+
+  display: flex;
+  justify-content: center;
+}
 
 /* 
 @media (prefers-color-scheme: light) {

@@ -66,11 +66,13 @@ function Footer() {
                     </div>
                     <div className='footer-bottom-pages footer-bottom-inner'>
                         <h1>Pages</h1>
-                        <a href="">About us</a>
-                        <a href="">Community blog</a>
-                        <a href="">Work with us</a>
-                        <a href="">Privacy policy</a>
-                        <a href="">Contact us</a>
+                        <div className='footer-bottom-pages-inner'>
+                            <a className='footer-p' href="">About us</a>
+                            <a className='footer-p' href="">Community blog</a>
+                            <a className='footer-p' href="">Work with us</a>
+                            <a className='footer-p' href="">Privacy policy</a>
+                            <a className='footer-p' href="">Contact us</a>
+                        </div>
                     </div>
                     <div className='footer-bottom-newsletters footer-bottom-inner'>
                         <h1>Newsletter</h1>

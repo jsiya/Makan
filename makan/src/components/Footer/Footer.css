@@ -64,12 +64,20 @@ footer p,h1{
     display: flex;
     justify-content: center;
     align-items: flex-start;
+    width: 80%;
+    gap: 50px;
 }
 .footer-bottom-inner{
     display: flex;
     flex-direction: column;
     align-items: flex-start;
+    gap: 30px;
     width: 20%;
+}
+.footer-bottom-pages-inner{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
 }
 .bottom-socials{
     display: flex;
@@ -98,6 +106,8 @@ footer p,h1{
     width: 100%;
     padding: 20px 0px;
     background-color: #1013117b;
+    display: flex;
+    justify-content: center;
 }
 
 @media screen and (max-width: 900px){
@@ -122,6 +132,7 @@ footer p,h1{
     .footer-top-sec{
         flex-direction: column;
         align-items: center;
+        /* flex-wrap: wrap; */
     }
     .footer-p-lg{
         font-size: 16px;
