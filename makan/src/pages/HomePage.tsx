@@ -27,6 +27,7 @@ const HomePage: React.FC = () => {
             Explore Real Adventure
           </div>
           <Swiper
+            style={{ borderRadius: '13px' }}
             modules={[Navigation, Scrollbar, A11y]}
             spaceBetween={35}
             slidesPerView={4}
