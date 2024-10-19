@@ -11,10 +11,15 @@ export const router = createBrowserRouter([
     {
         path: '/',
         element: <App/>,
+        errorElement: <ErrorPage />, 
         children: [
           {
             path: "*",
             element: <ErrorPage />,
+          },
+          {
+            index: true, // This will map the default path `/` to HomePage
+            element: <HomePage />,
           },
           {
             path: '/Home',
