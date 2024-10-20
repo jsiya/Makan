@@ -17,5 +17,12 @@
 .place-results-sec-right{
     display: flex;
     flex-direction: column;
+    gap: 20px;
     width: 100%;
+}
+
+@media screen and (max-width: 950px){
+    .place-results-sec-inner{
+        flex-direction: column;
+    }
 }

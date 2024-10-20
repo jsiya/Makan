@@ -1,6 +1,5 @@
 import { Radio, Select, Slider } from 'antd';
 import {StarFilled, StarOutlined} from '@ant-design/icons';
-import { useState } from 'react';
 import './PlacesFilterSection.css';
 import { FaSearch } from 'react-icons/fa';
 
