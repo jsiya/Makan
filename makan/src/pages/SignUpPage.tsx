@@ -3,6 +3,7 @@ import { Form, Input, Button, Checkbox } from 'antd';
 import { Formik, Form as FormikForm, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import axios from 'axios';
+import { useUser } from '../contexts/UserContext';
 import '../styles/SignUpPageStyles.css';
 
 const validationSchema = Yup.object().shape({
@@ -32,20 +33,25 @@ const SignUpPage: React.FC = () => {
     acceptTerms: false,
   };
 
+  const { setUser } = useUser();
+
   const handleSubmit = async (values: SignUpFormValues) => {
     try {
-      const response = await axios.post('http://127.0.0.1:5000/users', {
+      await axios.post('http://127.0.0.1:5000/users', {
         username: values.username,
         email: values.email,
         password: values.password,
       });
-      console.log('Registration successful:', response.data);
-      alert('Registration successful!');
+  
+      alert('Registration successful! Please log in.');
+  
+      window.location.href = '/login';
     } catch (error) {
       console.error('Registration failed:', error);
       alert('Registration failed. Please try again.');
     }
   };
+  
 
   return (
     <div className="signup-form-container">

@@ -3,10 +3,10 @@ import { Form, Input, Button } from 'antd';
 import { Formik, Form as FormikForm, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import axios from 'axios';
+import { useUser } from '../contexts/UserContext';
 import { useNavigate } from 'react-router-dom';
 import '../styles/LoginPageStyles.css';
 
-// Validation schema for the form
 const validationSchema = Yup.object().shape({
   username: Yup.string().required('Please enter your username or email'),
   password: Yup.string().required('Please enter your password'),
@@ -23,58 +23,47 @@ const LoginPage: React.FC = () => {
     password: '',
   };
 
+  const { setUser } = useUser();
   const navigate = useNavigate();
 
   const handleSubmit = async (values: LoginFormValues) => {
     try {
-      const response = await axios.post(
-        'http://127.0.0.1:5000//login', 
-        {
-          email: values.username,
-          password: values.password,
-        }
-      );
+      const response = await axios.post('http://127.0.0.1:5000/login', {
+        email: values.username,
+        password: values.password,
+      });
   
-      const token = response.data.access_token; 
-      localStorage.setItem('token', token);
-      console.log('Login successful:', response.data);
-
+      const { id, username, email } = response.data.user; 
+      const token = response.data.access_token;
+  
+      setUser({ id, username, email, token }); 
       navigate('/home'); 
     } catch (error) {
-      console.error('Login failed:', error);
+      if (axios.isAxiosError(error)) {
+        console.error('Login failed:', error.response?.data?.message || error.message);
+      } else {
+        console.error('An unexpected error occurred:', error);
+      }
       alert('Login failed. Please check your username and password.');
     }
   };
+  
+  
+  
 
   return (
     <div className="login-form-container">
       <h2>Login</h2>
-      <Formik
-        initialValues={initialValues}
-        validationSchema={validationSchema}
-        onSubmit={handleSubmit}
-      >
+      <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={handleSubmit}>
         {({ handleSubmit, values, handleChange }) => (
           <FormikForm onSubmit={handleSubmit}>
             <Form.Item>
-              <Field
-                name="username"
-                as={Input}
-                placeholder="Username or Email Address"
-                value={values.username}
-                onChange={handleChange}
-              />
+              <Field name="username" as={Input} placeholder="Username or Email Address" value={values.username} onChange={handleChange} />
               <ErrorMessage name="username" component="div" className="error-message" />
             </Form.Item>
 
             <Form.Item>
-              <Field
-                name="password"
-                as={Input.Password}
-                placeholder="Password"
-                value={values.password}
-                onChange={handleChange}
-              />
+              <Field name="password" as={Input.Password} placeholder="Password" value={values.password} onChange={handleChange} />
               <ErrorMessage name="password" component="div" className="error-message" />
             </Form.Item>
 
@@ -86,7 +75,7 @@ const LoginPage: React.FC = () => {
           </FormikForm>
         )}
       </Formik>
-      <div className='login-register-sec'>
+      <div className="login-register-sec">
         <p>Do not have an account?</p>
         <a href="/signup">Register</a>
       </div>

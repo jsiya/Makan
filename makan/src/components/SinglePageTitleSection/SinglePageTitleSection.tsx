@@ -4,9 +4,10 @@ import './SinglePageTitleSectionStyles.css'
 interface SinglePageTitleSectionProps {
   title?: string;
   location?: string;
+  entertainment_type?: string;
 }
 
-const SinglePageTitleSection: React.FC<SinglePageTitleSectionProps> = ({ title, location }) => {
+const SinglePageTitleSection: React.FC<SinglePageTitleSectionProps> = ({ title, location, entertainment_type}) => {
   return (
       <div className="single-title-sec">
         <div className="single-title-sec-left">
@@ -18,7 +19,7 @@ const SinglePageTitleSection: React.FC<SinglePageTitleSectionProps> = ({ title, 
         </div>
         <div className="single-title-sec-right">
             <h4 className='gray-p'>Category</h4>
-            <p>Adventure</p>
+            <p>{entertainment_type || "Entertainment not available"}</p>
         </div>
       </div>
     );
