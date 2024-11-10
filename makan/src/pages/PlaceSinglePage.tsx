@@ -33,7 +33,7 @@ const PlaceSinglePage: React.FC = () => {
   useEffect(() => {
     const fetchPlace = async () => {
       try {
-        const response = await axios.get(`http://127.0.0.1:5000/places/${id}`);
+        const response = await axios.get(`${import.meta.env.VITE_API_URL}/places/${id}`);
         const data = response.data;
         setPlace(data);
       } catch (err) {
@@ -46,7 +46,7 @@ const PlaceSinglePage: React.FC = () => {
 
     const fetchEntertainmentTypes = async () => {
       try {
-        const response = await axios.get("http://127.0.0.1:5000/entertainment_types");
+        const response = await axios.get(`${import.meta.env.VITE_API_URL}/entertainment_types`);
         setEntertainmentTypes(response.data);
       } catch (err) {
         console.error("Error fetching entertainment types:", err);

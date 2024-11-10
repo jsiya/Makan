@@ -37,7 +37,7 @@ const SignUpPage: React.FC = () => {
 
   const handleSubmit = async (values: SignUpFormValues) => {
     try {
-      await axios.post('http://127.0.0.1:5000/users', {
+      await axios.post(`${import.meta.env.VITE_API_URL}/users`, {
         username: values.username,
         email: values.email,
         password: values.password,

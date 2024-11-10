@@ -25,7 +25,7 @@ const HomePage: React.FC = () => {
   useEffect(() => {
     const fetchPlaces = async () => {
       try {
-    const response = await axios.get('http://127.0.0.1:5000/places');
+    const response = await axios.get(`${import.meta.env.VITE_API_URL}/places`);
     console.log('Places:', response.data);
         setPlaces(response.data);
       } catch (error) {

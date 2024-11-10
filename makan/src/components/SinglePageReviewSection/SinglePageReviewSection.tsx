@@ -40,14 +40,14 @@ const SinglePageReviewSection: React.FC<SinglePageReviewSectionProps> = ({ place
 
   const fetchReviews = async () => {
     try {
-      const response = await axios.get('http://127.0.0.1:5000/reviews');
+      const response = await axios.get(`${import.meta.env.VITE_API_URL}/reviews`);
       const reviewsData = response.data.data;
       if (Array.isArray(reviewsData)) {
         const placeReviews = reviewsData.filter((review: Review) => review.place_id === place_id);
         setReviews(placeReviews);
 
         const userIds = Array.from(new Set(placeReviews.map((review) => review.user_id)));
-        const userPromises = userIds.map((id) => axios.get(`http://127.0.0.1:5000/users/${id}`));
+        const userPromises = userIds.map((id) => axios.get(`${import.meta.env.VITE_API_URL}/users/${id}`));
         const userResponses = await Promise.all(userPromises);
 
         const users: User[] = userResponses.map((res) => res.data);
