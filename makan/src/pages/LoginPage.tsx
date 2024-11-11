@@ -37,7 +37,7 @@ const LoginPage: React.FC = () => {
       const token = response.data.access_token;
   
       setUser({ id, username, email, token }); 
-      navigate('/home'); 
+      navigate(-1);
     } catch (error) {
       if (axios.isAxiosError(error)) {
         console.error('Login failed:', error.response?.data?.message || error.message);

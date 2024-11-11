@@ -77,13 +77,13 @@ const PlaceSinglePage: React.FC = () => {
       )}
       <div className="single-page-body">
         <div className="single-page-body-inner">
-          <div>
+          <div className="single-page-body-inner-top">
             <SinglePageDescriptionSection />
-            {place && (
+            <SinglePageBookingSection />
+          </div>
+          {place && (
               <SinglePageReviewSection place_id={place.id} rating={place.rating} />
             )}
-          </div>
-          <SinglePageBookingSection />
         </div>
       </div>
     </div>

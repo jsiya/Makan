@@ -9,8 +9,7 @@
     display: flex;
     align-items: center;
 }
-.name-logo{
-    color: #4b8333 !important;
-    font-weight: 700;
-    font-size: 25px;
+
+.logo-img{
+    width: 80px;
 }
