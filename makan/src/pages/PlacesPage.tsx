@@ -1,15 +1,20 @@
-import PlaceResultsFilterSection from "../components/PlaceResultsFilterSection/PlaceResultsFilterSection";
-import PlaceResultsSection from "../components/PlaceResultsSection/PlaceResultsSection";
-import PlacesFilterSection from "../components/PlacesFilterSection/PlacesFilterSection";
-import PlacesTopSection from "../components/PlacesTopSection/PlacesTopSection";
-import '../styles/PlacesPageStyles.css';
 import { useState, useEffect } from 'react';
+import PlacesFilterSection from '../components/PlacesFilterSection/PlacesFilterSection';
+import PlaceResultsSection from '../components/PlaceResultsSection/PlaceResultsSection';
+import PlacesTopSection from '../components/PlacesTopSection/PlacesTopSection';
+import '../styles/PlacesPageStyles.css';
 import axios from 'axios';
 
 const PlacesPage: React.FC = () => {
-  const [places, setPlaces] = useState([]);  
+  const [places, setPlaces] = useState([]);
   const [sortOption, setSortOption] = useState<string>('rating');
   const [isAscending, setIsAscending] = useState<boolean>(false);
+  const [filters, setFilters] = useState({
+    category: null,
+    entertainmentType: null,
+    priceRange: [0, 50000],
+    rating: null,
+  });
 
   useEffect(() => {
     const fetchPlaces = async () => {
@@ -23,25 +28,22 @@ const PlacesPage: React.FC = () => {
     fetchPlaces();
   }, []);
 
-  const handleSortChange = (option: string, order: boolean) => {
-    setSortOption(option);
-    setIsAscending(order);
+  const handleFilterChange = (newFilters: any) => {
+    setFilters(newFilters);
   };
 
   return (
     <div className="places-main">
-      <PlacesTopSection/>
+      <PlacesTopSection />
       <div className="place-results-sec">
         <div className="place-results-sec-inner">
-          <PlacesFilterSection/>
+          <PlacesFilterSection onFilterChange={handleFilterChange} />
           <div className="place-results-sec-right">
-            <PlaceResultsFilterSection
-              placesCount={places.length}
+            <PlaceResultsSection
               sortOption={sortOption}
               isAscending={isAscending}
-              onSortChange={handleSortChange}
+              filters={filters}
             />
-            <PlaceResultsSection sortOption={sortOption} isAscending={isAscending} />
           </div>
         </div>
       </div>

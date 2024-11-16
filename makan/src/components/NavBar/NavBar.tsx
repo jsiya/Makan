@@ -24,7 +24,7 @@ function NavBar() {
     const fetchPlaces = async () => {
       try {
         const response = await axios.get(`${import.meta.env.VITE_API_URL}/places`);
-        setAllPlaces(response.data);
+        setAllPlaces(response.data.data);
       } catch (error) {
         console.error('Error fetching places:', error);
       }

@@ -8,17 +8,7 @@ import SinglePageTopSection from "../components/SinglePageTopSection/SinglePageT
 import '../styles/PlaceSinglePageStyles.css';
 import { useEffect, useState } from "react";
 import axios from "axios";
-
-interface Place {
-  id: number;
-  name: string;
-  location: string;
-  rating: number;
-  description?: string;
-  entertainment_type_id: number;
-  images: string[];
-  default_price?: number;
-}
+import { Place } from "../models/Place";
 
 interface EntertainmentType {
   id: number;
@@ -40,13 +30,27 @@ const PlaceSinglePage: React.FC = () => {
       } catch (err) {
         console.error("Error fetching place details:", err);
         setError('Failed to load place details.');
-      } finally {
-        setLoading(false);
+      }
+    };
+
+    const fetchEntertainmentTypes = async () => {
+      try {
+        const response = await axios.get(`${import.meta.env.VITE_API_URL}/entertainment_types`);
+        setEntertainmentTypes(response.data.data);
+      } catch (err) {
+        console.error("Error fetching entertainment types:", err);
       }
     };
 
     fetchPlace();
+    fetchEntertainmentTypes();
+    setLoading(false);
   }, [id]);
+
+  const getEntertainmentTypeName = (entertainmentTypeId: number) => {
+    const type = entertainmentTypes.find((etype) => etype.id === entertainmentTypeId);
+    return type ? type.name : "Unknown Entertainment Type";
+  };
 
   if (loading) return <p>Loading...</p>;
   if (error) return <p>{error}</p>;
@@ -58,7 +62,7 @@ const PlaceSinglePage: React.FC = () => {
         <SinglePageTitleSection
           title={place.name}
           location={place.location}
-          entertainment_type="Entertainment Type" // Replace with dynamic type if needed
+          entertainment_type={getEntertainmentTypeName(place.entertainment_type_id)}
         />
       )}
       <div className="single-page-body">
