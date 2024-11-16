@@ -8,6 +8,7 @@ import AboutPage from "../pages/AboutPage";
 import PlaceSinglePage from "../pages/PlaceSinglePage";
 import LoginPage from "../pages/LoginPage";
 import SignUpPage from "../pages/SignUpPage";
+import UserPage from "../pages/UserPage";
 
 export const router = createBrowserRouter([
     {
@@ -51,6 +52,10 @@ export const router = createBrowserRouter([
             path: '/SignUp',
             element: <SignUpPage/>
           },
+          {
+            path: '/UserInfo',
+            element: <UserPage/>
+          }
         ]
       },
 ]);

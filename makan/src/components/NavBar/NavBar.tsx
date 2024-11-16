@@ -134,7 +134,7 @@ function NavBar() {
               {token ? (
                 <>
                   <Tooltip title={username || 'User'}>
-                    <a href="/edit-profile">
+                    <a href="/userinfo">
                       <FaRegUserCircle color="#63ab45" />
                     </a>
                   </Tooltip>

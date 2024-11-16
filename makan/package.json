@@ -11,8 +11,10 @@
   },
   "dependencies": {
     "@fortawesome/react-fontawesome": "^0.2.2",
+    "@popperjs/core": "^2.11.8",
     "antd": "^5.21.4",
     "axios": "^1.7.7",
+    "bootstrap": "^5.3.3",
     "formik": "^2.4.6",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
