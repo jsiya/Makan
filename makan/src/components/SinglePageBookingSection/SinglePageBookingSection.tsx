@@ -3,9 +3,11 @@ import { DatePicker, Button, message } from 'antd';
 import { DollarCircleOutlined } from '@ant-design/icons';
 import './SinglePageBookingSectionStyles.css';
 
-const TICKET_PRICE = 15.0; // Price per ticket
+interface SinglePageBookingSectionProps {
+  price: number;
+}
 
-const SinglePageBookingSection: React.FC = () => {
+const SinglePageBookingSection: React.FC<SinglePageBookingSectionProps> = ({ price }) => {
   const [selectedDate, setSelectedDate] = useState(null);
   const [quantity, setQuantity] = useState(1);
 
@@ -29,12 +31,12 @@ const SinglePageBookingSection: React.FC = () => {
     setQuantity((prev) => (prev > 1 ? prev - 1 : 1));
   };
 
-  const totalPrice = (quantity * TICKET_PRICE).toFixed(2);
+  const totalPrice = (quantity * price).toFixed(2);
 
   return (
     <div className="booking-section">
       <h3>Book Your Ticket</h3>
-      <DatePicker 
+      <DatePicker
         onChange={handleDateChange}
         placeholder="Select Date"
         style={{ width: '100%' }}
@@ -48,7 +50,7 @@ const SinglePageBookingSection: React.FC = () => {
         <DollarCircleOutlined style={{ color: '#4CAF50', marginRight: '5px' }} />
         Total: ${totalPrice}
       </div>
-      <Button 
+      <Button
         type="primary"
         onClick={handleAddToBasket}
         className="add-to-basket-button"

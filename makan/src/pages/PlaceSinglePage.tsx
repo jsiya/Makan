@@ -16,6 +16,8 @@ interface Place {
   rating: number;
   description?: string;
   entertainment_type_id: number;
+  images: string[];
+  default_price?: number;
 }
 
 interface EntertainmentType {
@@ -34,8 +36,7 @@ const PlaceSinglePage: React.FC = () => {
     const fetchPlace = async () => {
       try {
         const response = await axios.get(`${import.meta.env.VITE_API_URL}/places/${id}`);
-        const data = response.data;
-        setPlace(data);
+        setPlace(response.data.data);
       } catch (err) {
         console.error("Error fetching place details:", err);
         setError('Failed to load place details.');
@@ -44,23 +45,8 @@ const PlaceSinglePage: React.FC = () => {
       }
     };
 
-    const fetchEntertainmentTypes = async () => {
-      try {
-        const response = await axios.get(`${import.meta.env.VITE_API_URL}/entertainment_types`);
-        setEntertainmentTypes(response.data);
-      } catch (err) {
-        console.error("Error fetching entertainment types:", err);
-      }
-    };
-
     fetchPlace();
-    fetchEntertainmentTypes();
   }, [id]);
-
-  const getEntertainmentTypeName = (id: number) => {
-    const type = entertainmentTypes.find((etype) => etype.id === id);
-    return type ? type.name : "Entertainment not available";
-  };
 
   if (loading) return <p>Loading...</p>;
   if (error) return <p>{error}</p>;
@@ -72,18 +58,18 @@ const PlaceSinglePage: React.FC = () => {
         <SinglePageTitleSection
           title={place.name}
           location={place.location}
-          entertainment_type={getEntertainmentTypeName(place.entertainment_type_id)}
+          entertainment_type="Entertainment Type" // Replace with dynamic type if needed
         />
       )}
       <div className="single-page-body">
         <div className="single-page-body-inner">
           <div className="single-page-body-inner-top">
-            <SinglePageDescriptionSection />
-            <SinglePageBookingSection />
+            {place && <SinglePageDescriptionSection place={place} />}
+            {place && <SinglePageBookingSection price={place.default_price || 0} />}
           </div>
           {place && (
-              <SinglePageReviewSection place_id={place.id} rating={place.rating} />
-            )}
+            <SinglePageReviewSection place_id={place.id} rating={place.rating} />
+          )}
         </div>
       </div>
     </div>
