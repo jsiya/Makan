@@ -109,13 +109,13 @@ const PlacesFilterSection: React.FC<PlacesFilterSectionProps> = ({ onFilterChang
             width: '95%', }}
           range
           className="custom-slider"
-          defaultValue={[0, 50000]}
-          max={50000}
+          defaultValue={[0, 500]}
+          max={500}
           onChange={(value) => setPriceRange(value as [number, number])}
         />
         <div className="slider-labels ">
           <span className="slider-min">0</span>
-          <span className="slider-max">5000</span>
+          <span className="slider-max">500</span>
         </div>
       </div>
       <div>
