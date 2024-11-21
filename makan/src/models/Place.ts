@@ -10,5 +10,6 @@ export interface Place {
   category_id?: number; 
   default_price?: number;
   images: string[];
+  city: string;
 }
   

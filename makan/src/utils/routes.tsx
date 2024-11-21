@@ -9,6 +9,8 @@ import PlaceSinglePage from "../pages/PlaceSinglePage";
 import LoginPage from "../pages/LoginPage";
 import SignUpPage from "../pages/SignUpPage";
 import UserPage from "../pages/UserPage";
+import AdminRoute from "./AdminRoute";
+import AdminPage from "../pages/AdminPage";
 
 export const router = createBrowserRouter([
     {
@@ -19,6 +21,14 @@ export const router = createBrowserRouter([
           {
             path: "*",
             element: <ErrorPage />,
+          },
+          {
+            path: '/admin',
+            element: (
+              <AdminRoute>
+                <AdminPage />
+              </AdminRoute>
+            ),
           },
           {
             index: true, 

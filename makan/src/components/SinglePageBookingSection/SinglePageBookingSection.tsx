@@ -55,7 +55,7 @@ const SinglePageBookingSection: React.FC<SinglePageBookingSectionProps> = ({ pri
         onClick={handleAddToBasket}
         className="add-to-basket-button"
       >
-        Add to Basket
+        Book
       </Button>
     </div>
   );

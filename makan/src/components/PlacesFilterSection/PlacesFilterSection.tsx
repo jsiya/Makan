@@ -1,31 +1,61 @@
 import { useState, useEffect } from 'react';
-import { Radio, Select, Slider } from 'antd';
+import { Select, Slider, Radio } from 'antd';
 import { StarFilled, StarOutlined } from '@ant-design/icons';
 import { FaSearch } from 'react-icons/fa';
 import './PlacesFilterSection.css';
 import axios from 'axios';
+import { Place } from '../../models/Place';
 
-interface FilterProps {
-  onFilterChange: (filters: any) => void;
+interface Category {
+  id: number;
+  name: string;
 }
 
-const PlacesFilterSection: React.FC<FilterProps> = ({ onFilterChange }) => {
-  const [categories, setCategories] = useState([]);
-  const [entertainmentTypes, setEntertainmentTypes] = useState([]);
+interface EntertainmentType {
+  id: number;
+  name: string;
+}
 
+interface PlacesFilterSectionProps {
+  onFilterChange: (filters: {
+    category: string | null;
+    adventureType: string | null;
+    city: string | null;
+    priceRange: [number, number];
+    rating: number | null;
+  }) => void;
+}
+
+const PlacesFilterSection: React.FC<PlacesFilterSectionProps> = ({ onFilterChange }) => {
+  const [categories, setCategories] = useState<Category[]>([]);
+  const [cities, setCities] = useState<string[]>([]);
+  const [entertainmentTypes, setEntertainmentTypes] = useState<EntertainmentType[]>([]);
   const [category, setCategory] = useState<string | null>(null);
-  const [entertainmentType, setEntertainmentType] = useState<string | null>(null);
-  const [priceRange, setPriceRange] = useState<[number, number]>([0, 50000]);
+  const [adventureType, setAdventureType] = useState<string | null>(null);
+  const [priceRange, setPriceRange] = useState<[number, number]>([0, 1000]);
   const [rating, setRating] = useState<number | null>(null);
+  const [city, setCity] = useState<string | null>(null);
+
 
   useEffect(() => {
     const fetchOptions = async () => {
       try {
-        const categoriesResponse = await axios.get(`${import.meta.env.VITE_API_URL}/place_categories`);
+        const categoriesResponse = await axios.get<{ data: Category[] }>(
+          `${import.meta.env.VITE_API_URL}/place_categories`
+        );
         setCategories(categoriesResponse.data.data);
-        
-        const entertainmentTypesResponse = await axios.get(`${import.meta.env.VITE_API_URL}/entertainment_types`);
+
+        const entertainmentTypesResponse = await axios.get<{ data: EntertainmentType[] }>(
+          `${import.meta.env.VITE_API_URL}/entertainment_types`
+        );
         setEntertainmentTypes(entertainmentTypesResponse.data.data);
+
+        const placesResponse = await axios.get<{ data: Place[] }>(
+          `${import.meta.env.VITE_API_URL}/places`
+        );
+        const allPlaces = placesResponse.data.data;
+        const uniqueCities = Array.from(new Set(allPlaces.map((place) => place.city)));
+        setCities(uniqueCities);
       } catch (error) {
         console.error('Error fetching filter options:', error);
       }
@@ -37,7 +67,8 @@ const PlacesFilterSection: React.FC<FilterProps> = ({ onFilterChange }) => {
   const handleSearch = () => {
     const filters = {
       category,
-      entertainmentType,
+      adventureType,
+      city,
       priceRange,
       rating,
     };
@@ -46,69 +77,63 @@ const PlacesFilterSection: React.FC<FilterProps> = ({ onFilterChange }) => {
 
   return (
     <div className="side-filter-sec">
+
       <Select
         size="large"
         showSearch
         placeholder="Place Category"
         style={{ width: '100%' }}
         onChange={(value) => setCategory(value)}
-        options={categories.map((cat: any) => ({ value: cat.id, label: cat.name }))}
+        options={categories.map((cat) => ({ value: cat.id.toString(), label: cat.name }))}
       />
       <Select
         size="large"
         showSearch
         placeholder="Entertainment Type"
         style={{ width: '100%' }}
-        onChange={(value) => setEntertainmentType(value)}
-        options={entertainmentTypes.map((type: any) => ({ value: type.id, label: type.name }))}
+        onChange={(value) => setAdventureType(value)}
+        options={entertainmentTypes.map((type) => ({ value: type.id.toString(), label: type.name }))}
       />
-      <Slider
-        style={{ width: '80%' }}
-        range
-        defaultValue={[0, 50000]}
-        max={50000}
-        onChange={(value) => setPriceRange(value as [number, number])}
+      <Select
+        size="large"
+        showSearch
+        placeholder="City"
+        style={{ width: '100%' }}
+        onChange={(value) => setCity(value)}
+        options={cities.map((city) => ({ value: city, label: city }))}
       />
+      <div className="slider-container">
+        <p className='gray-p filter-label'>Price</p>
+        <Slider
+          style={{ 
+            width: '95%', }}
+          range
+          className="custom-slider"
+          defaultValue={[0, 50000]}
+          max={50000}
+          onChange={(value) => setPriceRange(value as [number, number])}
+        />
+        <div className="slider-labels ">
+          <span className="slider-min">0</span>
+          <span className="slider-max">5000</span>
+        </div>
+      </div>
       <div>
+        <p className='gray-p filter-label'>Rating</p>
         <Radio.Group
           className="filter-rate-sec"
           onChange={(e) => setRating(e.target.value)}
         >
-          <Radio value={5}>
-            {[...Array(5)].map((_, i) => (
-              <StarFilled key={i} style={{ color: '#F7931E' }} />
-            ))}
-          </Radio>
-          <Radio value={4}>
-            {[...Array(4)].map((_, i) => (
-              <StarFilled key={i} style={{ color: '#F7931E' }} />
-            ))}
-            <StarOutlined style={{ color: '#F7931E' }} />
-          </Radio>
-          <Radio value={3}>
-            {[...Array(3)].map((_, i) => (
-              <StarFilled key={i} style={{ color: '#F7931E' }} />
-            ))}
-            <StarOutlined style={{ color: '#F7931E' }} />
-            <StarOutlined style={{ color: '#F7931E' }} />
-          </Radio>
-          <Radio value={2}>
-            {[...Array(2)].map((_, i) => (
-              <StarFilled key={i} style={{ color: '#F7931E' }} />
-            ))}
-            <StarOutlined style={{ color: '#F7931E' }} />
-            <StarOutlined style={{ color: '#F7931E' }} />
-            <StarOutlined style={{ color: '#F7931E' }} />
-          </Radio>
-          <Radio value={1}>
-            {[...Array(1)].map((_, i) => (
-              <StarFilled key={i} style={{ color: '#F7931E' }} />
-            ))}
-            <StarOutlined style={{ color: '#F7931E' }} />
-            <StarOutlined style={{ color: '#F7931E' }} />
-            <StarOutlined style={{ color: '#F7931E' }} />
-            <StarOutlined style={{ color: '#F7931E' }} />
-          </Radio>
+          {[5, 4, 3, 2, 1].map((stars) => (
+            <Radio key={stars} value={stars}>
+              {[...Array(stars)].map((_, i) => (
+                <StarFilled key={i} style={{ color: '#F7931E' }} />
+              ))}
+              {[...Array(5 - stars)].map((_, i) => (
+                <StarOutlined key={i} style={{ color: '#F7931E' }} />
+              ))}
+            </Radio>
+          ))}
         </Radio.Group>
       </div>
       <button type="button" className="submit-button" onClick={handleSearch}>

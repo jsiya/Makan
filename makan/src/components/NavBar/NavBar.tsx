@@ -12,7 +12,7 @@ interface Place {
 }
 
 function NavBar() {
-  const { id, username, token, logout } = useUser();
+  const { id, username, token, role, logout } = useUser();
   const navigate = useNavigate();
   const [searchQuery, setSearchQuery] = useState('');
   const [allPlaces, setAllPlaces] = useState<Place[]>([]);
@@ -25,6 +25,7 @@ function NavBar() {
       try {
         const response = await axios.get(`${import.meta.env.VITE_API_URL}/places`);
         setAllPlaces(response.data.data);
+        console.log(username)
       } catch (error) {
         console.error('Error fetching places:', error);
       }
@@ -97,6 +98,13 @@ function NavBar() {
                   About
                 </a>
               </li>
+              {role === 'admin' && ( 
+                <li className="nav-item">
+                  <a className="nav-link" href="/admin">
+                    Admin Dashboard
+                  </a>
+                </li>
+              )}
             </ul>
           </div>
           <div className="search-user-sec">
