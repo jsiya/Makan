@@ -1,10 +1,11 @@
 import { useState, useEffect, useRef } from 'react';
-import { FaRegUserCircle, FaSearch } from 'react-icons/fa';
+import { FaFirstOrder, FaRegUserCircle, FaSearch } from 'react-icons/fa';
 import { Tooltip } from 'antd';
 import { useUser } from '../../contexts/UserContext';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import './NavBarStyles.css';
+import { FaTicket } from 'react-icons/fa6';
 
 interface Place {
   id: number;
@@ -98,6 +99,13 @@ function NavBar() {
                   About
                 </a>
               </li>
+              {token && ( 
+                <li className="nav-item">
+                  <a className="nav-link" href="/bookings">
+                    Bookings
+                  </a>
+                </li>
+              )}
               {role === 'admin' && ( 
                 <li className="nav-item">
                   <a className="nav-link" href="/admin">
