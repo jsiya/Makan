@@ -11,16 +11,25 @@ const CRUDOperations: React.FC<CRUDOperationsProps> = ({ modelName }) => {
   const [isCreateSectionOpen, setCreateSectionOpen] = useState(false);
   const [editingItem, setEditingItem] = useState<any | null>(null); 
 
-  const toSnakeCase = (str: string) =>
-    str
+  const toSnakeCase = (str: string) => {
+    if (str.endsWith("y")) {
+      str = str.slice(0, -1) + "ie"; 
+    }
+    return str
       .replace(/([a-z])([A-Z])/g, "$1_$2")
       .toLowerCase();
+  };
 
   const fetchData = async () => {
     setLoading(true);
     try {
       const endpoint = toSnakeCase(modelName) + "s";
-      const response = await fetch(`${import.meta.env.VITE_API_URL}/${endpoint}`);
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/${endpoint}`,{
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      });
       const result = await response.json();
       setData(result.data || []);
     } catch (error) {
@@ -58,7 +67,7 @@ const CRUDOperations: React.FC<CRUDOperationsProps> = ({ modelName }) => {
 
       if (response.ok) {
         setCreateSectionOpen(false); 
-        fetchData();
+        fetchData()
       } else {
         console.error(`Failed to ${editingItem ? "update" : "create"} ${modelName}`);
       }
