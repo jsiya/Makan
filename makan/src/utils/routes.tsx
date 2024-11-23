@@ -11,6 +11,8 @@ import SignUpPage from "../pages/SignUpPage";
 import UserPage from "../pages/UserPage";
 import AdminRoute from "./AdminRoute";
 import AdminPage from "../pages/AdminPage";
+import BookingsPage from "../pages/BookingsPage";
+import BookingDetailPage from "../pages/BookingDetailPage";
 
 export const router = createBrowserRouter([
     {
@@ -65,6 +67,14 @@ export const router = createBrowserRouter([
           {
             path: '/UserInfo',
             element: <UserPage/>
+          },
+          {
+            path: '/bookings',
+            element: <BookingsPage/>
+          },
+          {
+            path: '/booking/:id',
+            element: <BookingDetailPage/>
           }
         ]
       },
